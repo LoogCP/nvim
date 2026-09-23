@@ -1,4 +1,4 @@
-return {
+local plugins = {
   { lazy = true, "nvim-lua/plenary.nvim" },
 
   { "nvim-tree/nvim-web-devicons", opts = {} },
@@ -43,9 +43,10 @@ return {
         end,
       },
 
-      -- autopairs , autocompletes ()[] etc
+      -- autopairs, autocompletes ()[] etc
       { "windwp/nvim-autopairs", opts = {} },
     },
+
     -- made opts a function cuz cmp config calls cmp module
     -- and we lazyloaded cmp so we dont want that file to be read on startup!
     opts = function()
@@ -84,5 +85,16 @@ return {
     cmd = "Telescope",
     opts = require "plugins.configs.telescope",
   },
-
 }
+
+-- Load personal plugins from lua/plugins/personal/
+-- Only *.lua files are loaded.
+-- Files such as *.lua.off are ignored automatically.
+local personal_dir = vim.fn.stdpath("config") .. "/lua/plugins/personal"
+
+for _, file in ipairs(vim.fn.glob(personal_dir .. "/*.lua", false, true)) do
+  local name = vim.fn.fnamemodify(file, ":t:r")
+  table.insert(plugins, require("plugins.personal." .. name))
+end
+
+return plugins
