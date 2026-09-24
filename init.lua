@@ -23,4 +23,4 @@ local plugins = require "plugins"
 
 require("lazy").setup(plugins, require "lazy_config")
 
-vim.cmd "colorscheme nightfox"
+require("theme").setup()

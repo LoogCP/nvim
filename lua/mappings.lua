@@ -34,3 +34,8 @@ map("v", "<leader>/", "gc", {
 map("n", "<leader>fm", function()
   require("conform").format()
 end, { desc = "格式化代码" })
+
+-- theme
+map("n", "<leader>th", function()
+  require("theme").pick()
+end, { desc = "选择主题" })
